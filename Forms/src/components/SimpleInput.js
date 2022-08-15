@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import useInput from '../hooks/use-input';
 const SimpleInput = (props) => {
@@ -9,12 +9,14 @@ const SimpleInput = (props) => {
   const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
 
   const {
-    enteredInput: enteredName,
-    isTouched: enteredNameTouched,
-    hasError: ,
+    value: enteredName,
+    hasError: nameInputIsInvalid,
     onChangeHandler: onChangeNameHandler,
-    onBlurHandler:
-  } = useInput()
+    onBlurHandler: onBlurNameHandler,
+    isValid: enteredNameIsValid,
+    resetInputHandler
+  } = useInput(value => value.trim() !== '')
+  // console.log(enteredName)
   // const enteredNameIsValid = enteredName.trim() !== '';
   // const nameInputIsInvalid = enteredNameTouched && !enteredNameIsValid
 
@@ -43,14 +45,15 @@ const SimpleInput = (props) => {
   }
   const formSubmissionHandler = (e) => {
     e.preventDefault();
-    setEnteredNameTouched(true);
+    // setEnteredNameTouched(true);
     if (!formIsValid) {
       return;
     }
     console.log(enteredName);
-    setEnteredName('')
+    resetInputHandler()
+    // setEnteredName('')
+    // setEnteredNameTouched(false);
     setEnteredEmail('')
-    setEnteredNameTouched(false);
     setEnteredEmailTouched(false);
   }
   const nameClasses = !nameInputIsInvalid ? 'form-control' : 'form-control invalid'
