@@ -30,12 +30,29 @@ const BasicForm = (props) => {
     resetInputHandler: resetEmailInput
   } = useInput(value => value.includes('@'))
 
+  let formIsValid = false;
+  if (enteredFnameIsValid && enteredLnameIsValid && enteredEmailIsValid)
+    formIsValid = true;
+
+  const formSubmissionHandler = (e) => {
+    e.preventDefault();
+
+    if (!formIsValid)
+      return;
+
+    console.log(enteredFname)
+    console.log(enteredLname)
+    console.log(enteredEmail)
+    resetFnameInput()
+    resetLnameInput()
+    resetEmailInput()
+  }
 
   const fNameClasses = !fNameHasError ? 'form-control' : 'form-control invalid'
   const lNameClasses = !lNameHasError ? 'form-control' : 'form-control invalid'
   const emailClasses = !emailHasError ? 'form-control' : 'form-control invalid'
   return (
-    <form>
+    <form onSubmit={formSubmissionHandler}>
       <div className='control-group'>
         <div className={fNameClasses}>
           <label htmlFor='fname'>First Name</label>
@@ -72,7 +89,7 @@ const BasicForm = (props) => {
         {emailHasError && <p className='error-text'>Email Must Be Valid</p>}
       </div>
       <div className='form-actions'>
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
