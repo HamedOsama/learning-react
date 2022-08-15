@@ -6,29 +6,45 @@ const BasicForm = (props) => {
   const {
     value: enteredFname,
     isValid: enteredFnameIsValid,
-    hasError: FnameHasError,
+    hasError: fNameHasError,
     onChangeHandler: onChangeFnameHandler,
     onBlurHandler: onBlurFnameHandler,
     resetInputHandler: resetFnameInput
   } = useInput(value => value.trim() !== '')
-  const fNameClasses = !FnameHasError ? 'form-control' : 'form-control invalid'
+  const {
+    value: enteredLname,
+    isValid: enteredLnameIsValid,
+    hasError: lNameHasError,
+    onChangeHandler: onChangeLnameHandler,
+    onBlurHandler: onBlurLnameHandler,
+    resetInputHandler: resetLnameInput
+  } = useInput(value => value.trim() !== '')
+  const fNameClasses = !fNameHasError ? 'form-control' : 'form-control invalid'
+  const lNameClasses = !lNameHasError ? 'form-control' : 'form-control invalid'
   return (
     <form>
       <div className='control-group'>
         <div className={fNameClasses}>
-          <label htmlFor='name'>First Name</label>
+          <label htmlFor='fname'>First Name</label>
           <input
             type='text'
-            id='name'
+            id='fname'
             value={enteredFname}
             onChange={onChangeFnameHandler}
             onBlur={onBlurFnameHandler}
           />
-          {FnameHasError && <p>First name Must Not Be Empty</p>}
+          {fNameHasError && <p className='error-text'>First name Must Not Be Empty</p>}
         </div>
-        <div className='form-control'>
-          <label htmlFor='name'>Last Name</label>
-          <input type='text' id='name' />
+        <div className={lNameClasses}>
+          <label htmlFor='lname'>Last Name</label>
+          <input
+            type='text'
+            id='lname'
+            value={enteredLname}
+            onChange={onChangeLnameHandler}
+            onBlur={onBlurLnameHandler}
+          />
+          {lNameHasError && <p className='error-text'>Last name Must Not Be Empty</p>}
         </div>
       </div>
       <div className='form-control'>
