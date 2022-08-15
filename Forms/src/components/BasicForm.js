@@ -11,6 +11,7 @@ const BasicForm = (props) => {
     onBlurHandler: onBlurFnameHandler,
     resetInputHandler: resetFnameInput
   } = useInput(value => value.trim() !== '')
+
   const {
     value: enteredLname,
     isValid: enteredLnameIsValid,
@@ -19,8 +20,20 @@ const BasicForm = (props) => {
     onBlurHandler: onBlurLnameHandler,
     resetInputHandler: resetLnameInput
   } = useInput(value => value.trim() !== '')
+
+  const {
+    value: enteredEmail,
+    isValid: enteredEmailIsValid,
+    hasError: emailHasError,
+    onChangeHandler: onChangeEmailHandler,
+    onBlurHandler: onBlurEmailHandler,
+    resetInputHandler: resetEmailInput
+  } = useInput(value => value.includes('@'))
+
+
   const fNameClasses = !fNameHasError ? 'form-control' : 'form-control invalid'
   const lNameClasses = !lNameHasError ? 'form-control' : 'form-control invalid'
+  const emailClasses = !emailHasError ? 'form-control' : 'form-control invalid'
   return (
     <form>
       <div className='control-group'>
@@ -47,9 +60,16 @@ const BasicForm = (props) => {
           {lNameHasError && <p className='error-text'>Last name Must Not Be Empty</p>}
         </div>
       </div>
-      <div className='form-control'>
-        <label htmlFor='name'>E-Mail Address</label>
-        <input type='text' id='name' />
+      <div className={emailClasses}>
+        <label htmlFor='email'>E-Mail Address</label>
+        <input
+          type='text'
+          id='email'
+          value={enteredEmail}
+          onChange={onChangeEmailHandler}
+          onBlur={onBlurEmailHandler}
+        />
+        {emailHasError && <p className='error-text'>Email Must Be Valid</p>}
       </div>
       <div className='form-actions'>
         <button>Submit</button>
