@@ -5,23 +5,31 @@ const SimpleInput = (props) => {
   // const [enteredName, setEnteredName] = useState('');
   // const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
+  // const [enteredEmail, setEnteredEmail] = useState('');
+  // const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
 
   const {
     value: enteredName,
+    isValid: enteredNameIsValid,
     hasError: nameInputIsInvalid,
     onChangeHandler: onChangeNameHandler,
     onBlurHandler: onBlurNameHandler,
-    isValid: enteredNameIsValid,
-    resetInputHandler
+    resetInputHandler: resetNameInput,
   } = useInput(value => value.trim() !== '')
+  const {
+    value: enteredEmail,
+    isValid: enteredEmailIsValid,
+    hasError: EmailInputIsInvalid,
+    onChangeHandler: onChangeEmailHandler,
+    onBlurHandler: onBlurEmailHandler,
+    resetInputHandler: resetEmailInput,
+  } = useInput(value => value.includes('@'))
   // console.log(enteredName)
   // const enteredNameIsValid = enteredName.trim() !== '';
   // const nameInputIsInvalid = enteredNameTouched && !enteredNameIsValid
 
-  const enteredEmailIsValid = enteredEmail.includes('@');
-  const EmailInputIsInvalid = enteredEmailTouched && !enteredEmailIsValid
+  // const enteredEmailIsValid = enteredEmail.includes('@');
+  // const EmailInputIsInvalid = enteredEmailTouched && !enteredEmailIsValid
 
   let formIsValid = false;
   if (enteredNameIsValid && enteredEmailIsValid)
@@ -33,16 +41,16 @@ const SimpleInput = (props) => {
   //   setEnteredName((prev) => e.target.value)
   // }
 
-  const onChangeEmailHandler = (e) => {
-    setEnteredEmailTouched(true);
-    setEnteredEmail((prev) => e.target.value)
-  }
+  // const onChangeEmailHandler = (e) => {
+  //   setEnteredEmailTouched(true);
+  //   setEnteredEmail((prev) => e.target.value)
+  // }
   // const onBlurNameHandler = (e) => {
   //   setEnteredNameTouched(true);
   // }
-  const onBlurEmailHandler = (e) => {
-    setEnteredEmailTouched(true);
-  }
+  // const onBlurEmailHandler = (e) => {
+  //   setEnteredEmailTouched(true);
+  // }
   const formSubmissionHandler = (e) => {
     e.preventDefault();
     // setEnteredNameTouched(true);
@@ -50,11 +58,13 @@ const SimpleInput = (props) => {
       return;
     }
     console.log(enteredName);
-    resetInputHandler()
+    // resetInputHandler()
+    resetNameInput()
+    resetEmailInput()
     // setEnteredName('')
     // setEnteredNameTouched(false);
-    setEnteredEmail('')
-    setEnteredEmailTouched(false);
+    // setEnteredEmail('')
+    // setEnteredEmailTouched(false);
   }
   const nameClasses = !nameInputIsInvalid ? 'form-control' : 'form-control invalid'
   const emailClasses = !EmailInputIsInvalid ? 'form-control' : 'form-control invalid'
