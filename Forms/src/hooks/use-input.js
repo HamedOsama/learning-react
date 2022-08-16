@@ -5,7 +5,6 @@ const initialInputState = {
   isTouched: false
 }
 const inputStateReducer = (state, action) => {
-  console.log(state)
   if (action.type === 'SET_VALUE')
     return {
       value: action.value,
