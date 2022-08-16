@@ -1,6 +1,9 @@
 import React from 'react'
 
 import useInput from '../hooks/use-input'
+
+const isNotEmpty = value => value.trim() !== '';
+
 const BasicForm = (props) => {
 
   const {
@@ -10,7 +13,7 @@ const BasicForm = (props) => {
     onChangeHandler: onChangeFnameHandler,
     onBlurHandler: onBlurFnameHandler,
     resetInputHandler: resetFnameInput
-  } = useInput(value => value.trim() !== '')
+  } = useInput(isNotEmpty)
 
   const {
     value: enteredLname,
@@ -19,7 +22,7 @@ const BasicForm = (props) => {
     onChangeHandler: onChangeLnameHandler,
     onBlurHandler: onBlurLnameHandler,
     resetInputHandler: resetLnameInput
-  } = useInput(value => value.trim() !== '')
+  } = useInput(isNotEmpty)
 
   const {
     value: enteredEmail,
