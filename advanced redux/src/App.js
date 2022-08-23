@@ -5,7 +5,7 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
-import { sendCartData } from './store/cart-actions';
+import { fetchCartData, sendCartData } from './store/cart-actions';
 
 let isInitial = true;
 function App() {
@@ -16,6 +16,7 @@ function App() {
 
   useEffect(() => {
     if (isInitial) {
+      dispatch(fetchCartData());
       isInitial = false;
       return;
     }
