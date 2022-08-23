@@ -5,6 +5,7 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
+import { sendCartData } from './store/cart-slice';
 import { uiActions } from './store/ui-slice';
 
 let isInitial = true;
@@ -19,37 +20,7 @@ function App() {
       isInitial = false;
       return;
     }
-    const updateCart = async () => {
-      try {
-        dispatch(uiActions.setNotification({
-          title: 'Sending...',
-          status: 'pending',
-          message: 'sending cart data.',
-        }))
-        const response = await fetch('https://first-hearth-357105-default-rtdb.firebaseio.com/cart.json', {
-          method: 'PUT',
-          body: JSON.stringify(cart),
-        })
-        if (!response.ok) {
-          throw new Error('Sending cart data failed.')
-        }
-        // const responseData = await response.json();
-
-        dispatch(uiActions.setNotification({
-          title: 'Success!',
-          status: 'success',
-          message: 'Cart data sent successfully.',
-        }))
-      } catch (error) {
-        console.log(error.message)
-        dispatch(uiActions.setNotification({
-          title: 'Error!',
-          status: 'error',
-          message: error.message,
-        }))
-      }
-    }
-    updateCart();
+    dispatch(sendCartData(cart))
   }, [cart, dispatch])
   return (
     <Fragment>
