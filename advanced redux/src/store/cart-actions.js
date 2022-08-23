@@ -11,7 +11,11 @@ export const fetchCartData = () => {
         if (!requestData.ok)
           throw new Error('Could not fetch cart data!')
         const data = await requestData.json();
-        dispatch(cartActions.replaceCart(data));
+        dispatch(cartActions.replaceCart(
+          {
+            items: data.items || [],
+            totalItems: data.totalItems
+          }));
       }
       catch (err) {
         dispatch(uiActions.setNotification({

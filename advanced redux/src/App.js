@@ -7,7 +7,10 @@ import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
 import { fetchCartData, sendCartData } from './store/cart-actions';
 
-let isInitial = true;
+let isInitial = {
+  dataRetrieved: false,
+  firstTime: true,
+};
 function App() {
   const dispatch = useDispatch();
   const cartIsShown = useSelector(state => state.ui.isShown)
@@ -15,9 +18,13 @@ function App() {
   const notification = useSelector(state => state.ui.notification)
 
   useEffect(() => {
-    if (isInitial) {
+    if (isInitial.firstTime) {
       dispatch(fetchCartData());
-      isInitial = false;
+      isInitial.firstTime = false;
+      return;
+    }
+    if (!isInitial.dataRetrieved) {
+      isInitial.dataRetrieved = true;
       return;
     }
     dispatch(sendCartData(cart))
