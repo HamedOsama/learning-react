@@ -1,20 +1,22 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
+import style from './MainHeader.module.css'
 
 function MainHeader() {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to='/welcome'>Welcome</Link>
-        </li>
-        <li>
-          <Link to='/products'>Products</Link>
-        </li>
-      </ul>
-    </nav>
+    <header className={style.header}>
+      <nav>
+        <ul>
+          <li>
+            <NavLink activeClassName={style.active} to='/welcome'>Welcome</NavLink>
+          </li>
+          <li>
+            <NavLink activeClassName={style.active} to='/products'>Products</NavLink>
+          </li>
+        </ul>
+      </nav>
+    </header>
   )
 }
-
 export default MainHeader
