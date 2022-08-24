@@ -25,7 +25,7 @@ const QuoteList = (props) => {
 
   console.log(isSortingAscending)
   const changeSortingHandler = () => {
-    history.push(`/quotes?sort=${isSortingAscending ? 'des' : 'asc'}`)
+    history.push(`${location.pathname}?sort=${isSortingAscending ? 'des' : 'asc'}`)
   }
   return (
     <Fragment>
