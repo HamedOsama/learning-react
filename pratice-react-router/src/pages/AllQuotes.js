@@ -6,10 +6,6 @@ import NoQuotesFound from '../components/quotes/NoQuotesFound';
 import useHttp from '../hooks/use-http';
 import { getAllQuotes } from '../lib/api'
 
-// const DUMMY_QUOTES = [
-//   { id: 'q1', author: 'Hamed', text: 'JS Dragon.' },
-//   { id: 'q2', author: 'Ahmed', text: 'PHP for ultimate beginners.' },
-// ]
 function AllQuotes() {
   const { sendRequest, status, data: loadedQuotes, error } = useHttp(getAllQuotes, true)
 
