@@ -6,10 +6,6 @@ import Comments from '../components/comments/Comments'
 import useHttp from '../hooks/use-http';
 import { getSingleQuote } from '../lib/api'
 import LoadingSpinner from '../components/UI/LoadingSpinner';
-// const DUMMY_QUOTES = [
-//   { id: 'q1', author: 'Hamed', text: 'JS Dragon.' },
-//   { id: 'q2', author: 'Ahmed', text: 'PHP for ultimate beginners.' },
-// ]
 
 function QuoteDetail() {
   const params = useParams();
