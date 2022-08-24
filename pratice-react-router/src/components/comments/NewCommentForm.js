@@ -17,13 +17,14 @@ const NewCommentForm = (props) => {
 
   const submitFormHandler = (event) => {
     event.preventDefault();
-    const enteredText = commentTextRef.current.value;
+    const enteredText = commentTextRef.current.value.trim();
     // optional: Could validate here
 
     // send comment to server
     sendRequest({
-      text: enteredText
-    }, props.id);
+      text: enteredText,
+      quoteId: props.id,
+    });
   };
 
   return (
