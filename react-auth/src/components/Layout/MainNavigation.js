@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import classes from './MainNavigation.module.css';
-
 const MainNavigation = () => {
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+  console.log(isLoggedIn)
   return (
     <header className={classes.header}>
       <Link to='/'>
@@ -10,15 +12,21 @@ const MainNavigation = () => {
       </Link>
       <nav>
         <ul>
-          <li>
-            <Link to='/auth'>Login</Link>
-          </li>
-          <li>
-            <Link to='/profile'>Profile</Link>
-          </li>
-          <li>
-            <button>Logout</button>
-          </li>
+          {!isLoggedIn &&
+            <li>
+              <Link to='/auth'>Login</Link>
+            </li>
+          }
+          {isLoggedIn &&
+            <li>
+              <Link to='/profile'>Profile</Link>
+            </li>
+          }
+          {isLoggedIn &&
+            <li>
+              <button>Logout</button>
+            </li>
+          }
         </ul>
       </nav>
     </header>
