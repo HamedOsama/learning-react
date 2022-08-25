@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import classes from './Comments.module.css';
@@ -15,9 +15,15 @@ const Comments = () => {
   // console.log(quoteId)
   const { sendRequest, status, data: loadedComments, error } = useHttp(getAllComments, true)
 
+
   useEffect(() => {
     sendRequest(quoteId);
     // console.log(1)
+  }, [sendRequest, quoteId])
+
+  const onAddedCommentHandler = useCallback(() => {
+    sendRequest(quoteId);
+    setIsAddingComment(false)
   }, [sendRequest, quoteId])
 
   let comments;
@@ -40,9 +46,7 @@ const Comments = () => {
   const startAddCommentHandler = () => {
     setIsAddingComment(true);
   };
-  const onAddedCommentHandler = () => {
 
-  }
   return (
     <section className={classes.comments}>
       <h2>User Comments</h2>
