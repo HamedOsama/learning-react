@@ -17,7 +17,6 @@ function AllQuotes() {
     return <div className='centered'>
       <LoadingSpinner />
     </div>
-  console.log(status)
   if (error)
     return <p className='centered focused'>{error}</p>
   if (status === 'completed' && (!loadedQuotes || loadedQuotes.length === 0))
