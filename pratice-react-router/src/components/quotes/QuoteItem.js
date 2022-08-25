@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import classes from './QuoteItem.module.css';
 

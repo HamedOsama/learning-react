@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, Route, Link, useRouteMatch } from 'react-router-dom'
+import { useParams, Route, Link, Routes } from 'react-router-dom'
 
 import HighlightedQuotes from '../components/quotes/HighlightedQuote'
 import Comments from '../components/comments/Comments'
@@ -11,7 +11,8 @@ function QuoteDetail() {
   const params = useParams();
   const { quoteId } = params;
 
-  const match = useRouteMatch();
+  // const match = useMatch();
+  // console.log(match);
   const { sendRequest, status, data: loadedQuote, error } = useHttp(getSingleQuote, true)
 
   useEffect(() => {
@@ -28,17 +29,16 @@ function QuoteDetail() {
   if (!loadedQuote.text) {
     return <p>No quote found!</p>
   }
+  const loadCommentBtn = <div className='centered'>
+    <Link className='btn--flat' to={`comments`}>Load Comments</Link>
+  </div>
   return (
     <div>
       <HighlightedQuotes text={loadedQuote.text} author={loadedQuote.author} />
-      <Route path={match.path} exact>
-        <div className='centered'>
-          <Link className='btn--flat' to={`${match.url}/comments`}>Load Comments</Link>
-        </div>
-      </Route>
-      <Route path={`${match.path}/comments`}>
-        <Comments />
-      </Route>
+      <Routes>
+        <Route path='/' element={loadCommentBtn} />
+        <Route path={`comments`} element={<Comments />} />
+      </Routes>
     </div>
   )
 }

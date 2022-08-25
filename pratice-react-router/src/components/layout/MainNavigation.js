@@ -9,10 +9,11 @@ function MainNavigation() {
       <nav className={style.nav}>
         <ul>
           <li>
-            <NavLink activeClassName={style.active} to="/quotes">All Quotes</NavLink>
+            {/* className={({ isActive }) => "nav-link" + (isActive ? " activated" : "")} */}
+            <NavLink className={({ isActive }) => isActive ? style.active : ''} to="/quotes">All Quotes</NavLink>
           </li>
           <li>
-            <NavLink activeClassName={style.active} to="/new-quote">Add Quote</NavLink>
+            <NavLink className={({ isActive }) => isActive ? style.active : ''} to="/new-quote">Add Quote</NavLink>
           </li>
         </ul>
       </nav>
