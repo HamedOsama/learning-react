@@ -1,9 +1,11 @@
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import classes from './ProfileForm.module.css';
 
 const ProfileForm = () => {
+  const history = useHistory();
   const passwordInputRef = useRef();
   const idToken = useSelector(state => state.auth.token);
 
@@ -23,7 +25,7 @@ const ProfileForm = () => {
         'Content-Type': 'application/json'
       }
     }).then(res => {
-
+      history.replace('/')
     })
   }
   return (

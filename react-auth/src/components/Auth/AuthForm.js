@@ -1,11 +1,12 @@
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-
+import { useHistory } from 'react-router-dom';
 import classes from './AuthForm.module.css';
 import { authActions } from '../../store/auth-slice';
 
 const AuthForm = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
@@ -53,8 +54,10 @@ const AuthForm = () => {
     })
     const resData = await req.json();
     console.log(resData);
-    if (!resData.error)
+    if (!resData.error) {
       dispatch(authActions.login(resData.idToken));
+      history.replace('/')
+    }
     else {
       let errorMessage = 'Login failed!';
       if (resData && resData.error && resData.error.message) {
