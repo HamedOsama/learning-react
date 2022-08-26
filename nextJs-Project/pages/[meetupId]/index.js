@@ -31,7 +31,7 @@ export function getStaticPaths() {
 
 export function getStaticProps(context) {
   const req = context
-  console.log(req)
+  // console.log(req)
   const meetupId = context.params.meetupId
   return {
     props: {
