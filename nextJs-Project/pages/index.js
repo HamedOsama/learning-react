@@ -27,7 +27,7 @@ function HomePage(props) {
 
 
 
-const handler = async () => {
+const getMeetupHandler = async () => {
   const client = await MongoClient.connect('mongodb+srv://hamed:OMQ0DgFIIlMqQw0Q@cluster0.vk7otrn.mongodb.net/meetups?retryWrites=true&w=majority')
   const db = client.db();
   const meetupsCollections = db.collection('meetups');
@@ -37,7 +37,7 @@ const handler = async () => {
 };
 
 export async function getStaticProps() {
-  let loadedData = await handler();
+  let loadedData = await getMeetupHandler();
   const modifiedData = loadedData.map(el => {
     return {
       id: el._id.toString(),
