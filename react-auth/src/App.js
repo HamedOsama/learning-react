@@ -1,5 +1,6 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLogoutTimeHandler } from './store/auth-slice';
 
 import Layout from './components/Layout/Layout';
 import UserProfile from './components/Profile/UserProfile';
@@ -7,6 +8,9 @@ import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 
 function App() {
+  const dispatch = useDispatch();
+  dispatch(setLogoutTimeHandler());
+
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
   return (
     <Layout>

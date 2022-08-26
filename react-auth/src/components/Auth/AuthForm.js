@@ -64,7 +64,7 @@ const AuthForm = () => {
       dispatch(loginActionHandler(
         {
           id: resData.idToken,
-          expiresIn: resData.expiresIn
+          expireTime: new Date(new Date().getTime() + (+resData.expiresIn * 1000)).toISOString(),
         }
       ));
       history.replace('/')

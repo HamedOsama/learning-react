@@ -1,4 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
+
+let logoutTimer;
+
+const calculateRemainingTime = expireTime => {
+  const currentTime = new Date().getTime();
+  const adjustedExpireTime = new Date(expireTime).getTime();
+
+  const remainingTime = adjustedExpireTime - currentTime;
+  return remainingTime;
+}
+
+const retrieveStoredToken = () => {
+  const expireTime = window.localStorage.getItem('expireTime');
+  const remainingTime = calculateRemainingTime(expireTime);
+  if (remainingTime <= 300000) {
+    window.localStorage.removeItem('tokenId');
+    window.localStorage.removeItem('expireTime');
+  }
+}
+retrieveStoredToken();
 const initialState = {
   token: window.localStorage.getItem('tokenId'),
   isLoggedIn: window.localStorage.getItem('tokenId') ? true : false
@@ -8,17 +28,18 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      console.log(action.payload);
-      state.token = action.payload;
+      state.token = action.payload.id;
       state.isLoggedIn = true;
-      window.localStorage.setItem('tokenId', action.payload);
+      window.localStorage.setItem('tokenId', action.payload.id);
+      window.localStorage.setItem('expireTime', action.payload.expireTime);
     },
     logout: state => {
-      console.log(state)
-      console.log(1);
       state.token = null;
       state.isLoggedIn = false;
       window.localStorage.removeItem('tokenId');
+      window.localStorage.removeItem('expireTime');
+      if (logoutTimer)
+        clearTimeout(logoutTimer);
     }
   }
 })
@@ -28,8 +49,18 @@ export const authActions = authSlice.actions;
 
 export const loginActionHandler = data => {
   return async (dispatch) => {
-    dispatch(authActions.login(data.id))
-    setTimeout(() => dispatch(authActions.logout()), data.expiresIn * 1000)
+    dispatch(authActions.login(data));
+    const remainingTime = calculateRemainingTime(data.expireTime);
+    logoutTimer = setTimeout(() => dispatch(authActions.logout()), remainingTime);
   }
+}
 
+export const setLogoutTimeHandler = () => {
+  return (dispatch) => {
+    const expireTime = window.localStorage.getItem('expireTime');
+    if (!expireTime)
+      return;
+    const remainingTime = calculateRemainingTime(expireTime);
+    logoutTimer = setTimeout(() => dispatch(authActions.logout()), remainingTime);
+  }
 }
