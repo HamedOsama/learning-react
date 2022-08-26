@@ -1,9 +1,10 @@
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import classes from './AuthForm.module.css';
-import { authActions } from '../../store/auth-slice';
 
+import classes from './AuthForm.module.css';
+// import { authActions } from '../../store/auth-slice';
+import { loginActionHandler } from '../../store/auth-slice';
 const AuthForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -55,7 +56,17 @@ const AuthForm = () => {
     const resData = await req.json();
     console.log(resData);
     if (!resData.error) {
-      dispatch(authActions.login(resData.idToken));
+      // dispatch(loginHandler({
+      //   id: resData.idToken,
+      //   expiresIn: resData.expiresIn
+      // }));
+      console.log(1)
+      dispatch(loginActionHandler(
+        {
+          id: resData.idToken,
+          expiresIn: resData.expiresIn
+        }
+      ));
       history.replace('/')
     }
     else {
