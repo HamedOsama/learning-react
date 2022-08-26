@@ -1,4 +1,7 @@
-import { Fragment } from "react"
+import { ObjectID } from 'bson';
+import { MongoClient } from 'mongodb'
+// import { Fragment } from "react"
+
 import MeetupDetail from "../../components/meetups/MeetupDetail"
 
 function MeetupDetails({ meetupData }) {
@@ -11,37 +14,58 @@ function MeetupDetails({ meetupData }) {
   />
 }
 
-export function getStaticPaths() {
+
+const getMeetupHandler = async (ids, id) => {
+  const client = await MongoClient.connect('mongodb+srv://hamed:OMQ0DgFIIlMqQw0Q@cluster0.vk7otrn.mongodb.net/meetups?retryWrites=true&w=majority')
+  const db = client.db();
+  const meetupsCollections = db.collection('meetups');
+  let result;
+  if (ids)
+    result = await meetupsCollections.find({}, { id: 1 }).toArray()
+  else {
+    result = await meetupsCollections.findOne({ _id: ObjectID(id) })
+  }
+  client.close();
+  return result;
+};
+
+export async function getStaticPaths() {
+  const ids = await getMeetupHandler(true);
   return {
     fallback: false,
-    paths: [
-      {
+    paths: ids.map(el => {
+      return {
         params: {
-          meetupId: 'm1'
-        }
-      },
-      {
-        params: {
-          meetupId: 'm1'
+          meetupId: el._id.toString()
         }
       }
-    ]
+    })
+    // [
+    //   {
+    //     params: {
+    //       meetupId: 'm1'
+    //     }
+    //   },
+    //   {
+    //     params: {
+    //       meetupId: 'm1'
+    //     }
+    //   }
+    // ]
   }
 }
 
-export function getStaticProps(context) {
-  const req = context
-  // console.log(req)
+export async function getStaticProps(context) {
   const meetupId = context.params.meetupId
+  const meetup = await getMeetupHandler(false, meetupId)
+  const meetupData = JSON.parse(meetup.data)
+  const modifiedData = {
+    id: meetup._id.toString(),
+    ...meetupData
+  }
   return {
     props: {
-      meetupData: {
-        id: meetupId,
-        title: "A First Meetup",
-        description: "This is first meetup",
-        address: "some address 5, 12334 cairo",
-        image: "https://th.bing.com/th/id/R.2e256937c5832ae1dbb89e9df2ba073e?rik=71gwaRV6RgxItQ&pid=ImgRaw&r=0",
-      }
+      meetupData: { ...modifiedData }
     }
   }
 }
