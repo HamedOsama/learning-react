@@ -24,22 +24,22 @@ function HomePage(props) {
   )
 }
 
-// export function getStaticProps() {
-//   return {
-//     props: {
-//       meetups: DUMMY_MEETUPS,
-//     },
-//     revalidate: 10
-//   }
-// }
-
-export function getServerSideProps(context) {
-  const req = context.req;
-  // console.log(req)
+export function getStaticProps() {
   return {
     props: {
       meetups: DUMMY_MEETUPS,
-    }
+    },
+    revalidate: 10
   }
 }
+
+// export function getServerSideProps(context) {
+//   const req = context.req;
+//   // console.log(req)
+//   return {
+//     props: {
+//       meetups: DUMMY_MEETUPS,
+//     }
+//   }
+// }
 export default HomePage
