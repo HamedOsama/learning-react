@@ -1,17 +1,30 @@
 import { ObjectID } from 'bson';
 import { MongoClient } from 'mongodb'
+import Head from 'next/head';
+import { Fragment } from 'react';
 // import { Fragment } from "react"
 
 import MeetupDetail from "../../components/meetups/MeetupDetail"
 
 function MeetupDetails({ meetupData }) {
   // console.log(props)
-  return <MeetupDetail
-    title={meetupData.title}
-    description={meetupData.description}
-    address={meetupData.address}
-    image={meetupData.image}
-  />
+  return (
+    <Fragment>
+      <Head>
+        <title>{meetupData.title}</title>
+        <meta
+          name='description'
+          content={meetupData.description}
+        />
+      </Head>
+      <MeetupDetail
+        title={meetupData.title}
+        description={meetupData.description}
+        address={meetupData.address}
+        image={meetupData.image}
+      />
+    </Fragment>
+  )
 }
 
 
