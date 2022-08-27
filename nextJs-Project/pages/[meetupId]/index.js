@@ -45,7 +45,7 @@ const getMeetupHandler = async (ids, id) => {
 export async function getStaticPaths() {
   const ids = await getMeetupHandler(true);
   return {
-    fallback: false,
+    fallback: 'blocking',
     paths: ids.map(el => {
       return {
         params: {
